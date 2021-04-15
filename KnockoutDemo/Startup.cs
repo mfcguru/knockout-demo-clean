@@ -10,6 +10,7 @@ namespace KnockoutDemo
 {
     using KnockoutDemo.Entities;
     using KnockoutDemo.Source.Infrastructure.Helpers;
+    using Microsoft.Extensions.Logging;
 
     public class Startup
     {
@@ -36,16 +37,9 @@ namespace KnockoutDemo
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerProvider loggerProvider)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
+            app.ConfigureExceptionHandler(loggerProvider.CreateLogger("default"));
 
             app.UseStaticFiles();
 

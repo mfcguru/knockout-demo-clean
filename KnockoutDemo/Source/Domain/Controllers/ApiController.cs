@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 
 namespace KnockoutDemo.Source.Domain.Controllers
 {
-    using KnockoutDemo.Source.Domain.BusinessRules;
     using KnockoutDemo.Source.Domain.UseCases.DeleteAllUsers;
     using KnockoutDemo.Source.Domain.UseCases.GetAllUsers;
     using KnockoutDemo.Source.Domain.UseCases.UploadCsvFile;
@@ -22,15 +21,9 @@ namespace KnockoutDemo.Source.Domain.Controllers
         [HttpPost("csv/upload")]
         public async Task<ActionResult> UploadCsvFile([FromForm] IFormFile file)
         {
-            try
-            {
-                await mediator.Send(new UploadCsvFileCommand(file));
-                return Ok();
-            }
-            catch (BusinessRulesException e)
-            {
-                return StatusCode((int)e.StatusCode, e.Message);
-            }
+            await mediator.Send(new UploadCsvFileCommand(file));
+
+            return Ok();
         }
 
         [HttpGet("report")]

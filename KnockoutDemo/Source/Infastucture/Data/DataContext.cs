@@ -9,6 +9,7 @@ namespace KnockoutDemo.Entities
         public DataContext(DbContextOptions<DataContext> options)
             : base(options)
         {
+            Database.SetCommandTimeout(6000);
         }
 
         public virtual DbSet<User> Users { get; set; }

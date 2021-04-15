@@ -22,6 +22,7 @@
         <div class="alert alert-success mx-5">
             <span data-bind="text: message"></span>
             <p>You can go to <a href="report">Report</a> page to view uploaded data</p>
+            <p class="text-warning">Depending on the size of the data uploaded the database operation may take a while to complete.</p>
         </div>
     </div>
 
@@ -75,7 +76,7 @@
                     self.message('Sucess!')
                     self.showSuccess(true)
                 }).catch((error) => {
-                    self.message(error.response.data)
+                    self.message(error.response.data.message)
                     self.showError(true)
                 }).finally(() => {
                     self.showLoading(false)

@@ -1,7 +1,4 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
+﻿
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>This is a demonstration of Knockout JS.</p>
@@ -65,7 +62,7 @@
             self.showError = ko.observable(false)
             self.showSuccess = ko.observable(false)
             self.uploadCsvFileHandler = function () {
-                self.message('Loading...')
+                self.message('Uploading...')
                 self.showLoading(true)
                 self.showSuccess(false)
                 self.showError(false)

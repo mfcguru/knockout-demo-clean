@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 namespace KnockoutDemo.Source.Domain.Controllers
 {
     using KnockoutDemo.Source.Domain.BusinessRules;
+    using KnockoutDemo.Source.Domain.UseCases.DeleteAllUsers;
     using KnockoutDemo.Source.Domain.UseCases.GetAllUsers;
     using KnockoutDemo.Source.Domain.UseCases.UploadCsvFile;
 
@@ -38,6 +39,14 @@ namespace KnockoutDemo.Source.Domain.Controllers
             var result = await mediator.Send(new GetAllUsersCommand());
 
             return Ok(result);
+        }
+
+        [HttpDelete("report")]
+        public async Task<ActionResult> DeleteAllUsers()
+        {
+            await mediator.Send(new DeleteAllUsersCommand());
+
+            return Ok();
         }
     }
 }

@@ -1,4 +1,8 @@
-﻿<div data-bind="if: showLoading">
+﻿<div data-bind="ifnot: showLoading">
+    <button data-bind="click: deleteAllUsersHandler" class="btn btn-primary float-right my-2">Delete All Users</button>
+</div>
+
+<div data-bind="if: showLoading">
     <div class="alert alert-info mx-5">
         <span data-bind="text: message"></span>
         <i class="fas fa-circle-notch fa-spin"></i>
@@ -34,6 +38,15 @@
             self.message = ko.observable('')
             self.showLoading = ko.observable(false)
             self.users = ko.observableArray([])
+            self.deleteAllUsersHandler = function() {
+                self.message('Deleting...')
+                self.showLoading(true)
+                axios.delete('api/report')                    
+                    .finally(() => {
+                        self.users([])
+                        self.showLoading(false)
+                    })
+            }
             self.getReport = function () {
                 self.message('Loading...')
                 self.showLoading(true)

@@ -1,0 +1,57 @@
+﻿<div data-bind="if: showLoading">
+    <div class="alert alert-info mx-5">
+        <span data-bind="text: message"></span>
+        <i class="fas fa-circle-notch fa-spin"></i>
+    </div>
+</div>
+
+<div class="container">    
+    <table class="table mt-5">
+        <thead>
+            <tr>
+                <th>UserId</th>
+                <th>Name</th>
+                <th>Age</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: users">
+            <tr>
+                <td data-bind="text: userId"></td>
+                <td data-bind="text: fullName"></td>
+                <td data-bind="text: age"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+@section scripts {
+
+    <script>
+        function viewModel() {
+            var self = this
+            self.message = ko.observable('')
+            self.showLoading = ko.observable(false)
+            self.users = ko.observableArray([])
+            self.getReport = function () {
+                self.message('Loading...')
+                self.showLoading(true)
+                self.users([])
+                axios.get('api/report')
+                  .then((response) => {
+                      self.users(response.data)
+                  })
+                  .finally(() => {
+                    self.showLoading(false)
+                  })
+            }
+
+            self.getReport()
+        }
+
+        ko.applyBindings(new viewModel())
+
+    </script>
+
+}

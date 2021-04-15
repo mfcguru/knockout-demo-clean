@@ -1,0 +1,93 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>This is a demonstration of Knockout JS.</p>
+    <p>Please choose a CSV file to upload.</p>
+    <hr>
+
+    <div data-bind="if: showLoading">
+        <div class="alert alert-info mx-5">
+            <span data-bind="text: message"></span>
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </div>
+    </div>
+
+    <div data-bind="if: showError">
+        <div class="alert alert-danger mx-5">
+            <span data-bind="text: message"></span>
+        </div>
+    </div>
+
+    <div data-bind="if: showSuccess">
+        <div class="alert alert-success mx-5">
+            <span data-bind="text: message"></span>
+            <p>You can go to <a href="report">Report</a> page to view uploaded data</p>
+        </div>
+    </div>
+
+    <div class="py-5">
+        <input id="file" name="file" type="file" accept=".csv" />
+        <button data-bind="click: uploadCsvFileHandler">Upload</button>
+    </div>
+
+
+    <div class="alert alert-warning text-left mx-5">
+        <p>The uploaded CSV file will be validated according to the following business rules:</p>
+        <ul>
+            <li>
+                The structure must follow the following order:
+                <ul>
+                    <li>UserId</li>
+                    <li>FirstName</li>
+                    <li>LastName</li>
+                    <li>Age</li>
+                </ul>
+            </li>
+            <li>UserId must be numeric</li>
+            <li>UserId must be unique</li>
+            <li>Age must be numeric</li>
+            <li>Age must be a postive number</li>
+            <li>All fields are required</li>
+        </ul>
+    </div>
+</div>
+
+@section scripts {
+
+    <script>
+        function viewModel() {
+            var self = this
+            self.message = ko.observable('')
+            self.showLoading = ko.observable(false)
+            self.showError = ko.observable(false)
+            self.showSuccess = ko.observable(false)
+            self.uploadCsvFileHandler = function () {
+                self.message('Loading...')
+                self.showLoading(true)
+                self.showSuccess(false)
+                self.showError(false)
+                var formData = new FormData()
+                var uploadFile = document.querySelector('#file')
+                formData.append("file", uploadFile.files[0])
+                axios.post('api/csv/upload', formData, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                }).then(() => {
+                    self.message('Sucess!')
+                    self.showSuccess(true)
+                }).catch((error) => {
+                    self.message(error.response.data)
+                    self.showError(true)
+                }).finally(() => {
+                    self.showLoading(false)
+                })
+            }
+        }
+
+        ko.applyBindings(new viewModel())
+
+    </script>
+
+}

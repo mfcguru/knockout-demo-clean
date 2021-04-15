@@ -1,0 +1,107 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+<div class="mb5">
+    <h3>KnockoutDemo Technical Notes</h3>
+    <hr />
+    <ul>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#development-tools">Development Tools/Frameworks</a></li>
+        <li><a href="#unit-testing-approach">Unit Testing Approach</a></li>
+        <li><a href="#local-setup">Local Setup</a></li>
+        <li><a href="#deploying-to-heroku">Deploying to Heroku</a></li>
+
+        <div id="architecture" class="pt-5">
+            <h5>Architecture</h5>
+            <p>The architectural implementation employed is a traditional layered architecture. The code can be cloned or downloaded in this <a href="#">repository</a>.</p>
+            <p>An alternative architectural implementation using Robert Martin's Clean Architecture and is available <a href="#">here</a>.</p>
+        </div>
+
+        <div id="development-tools" class="pt-5">
+            <h5>Development Tools/Frameworks</h5>
+            <p><strong>Backend</strong></p>
+            <ul>
+                <li>.Net 5</li>
+                <li>EF Core</li>
+                <li>.Net Core built-in dependency injection</li>
+                <li>MediatR (only with the cean architecture version)</li>
+            </ul>
+            <p class="pt-3"><strong>Frontend</strong></p>
+            <ul>
+                <li>KnockoutJS</li>
+                <li>Bootstrap</li>
+                <li>Fontawesome</li>
+                <li>Axios</li>
+            </ul>
+            <p class="pt-3"><strong>Others</strong></p>
+            <ul>
+                <li>Microsoft SQL Server</li>
+                <li>Docker</li>
+                <li>Heroku</li>
+            </ul>
+        </div>
+
+        <div id="local-setup" class="pt-5">
+            <h5>Local Setup</h5>
+            <ul>
+                <li>Open the .sln file in Visual Studio</li>
+                <li>Locate the script.sql in the Solution Items folder</li>
+                <li>Using SQL Mangement Studio, create a blank database and name it as 'KnockoutDemo'</li>
+                <li>Execute the script in step 2</li>
+                <li>Go back to Visual Studio and verify that the connection string is valid</li>
+                <li>Run the application</li>
+            </ul>
+        </div>
+
+        <div id="deploying-to-heroku" class="pt-5">
+            <h5>Deploying to Heroku</h5>
+            <ul>
+                <li>Download and intall Docker for Windows</li>
+                <li>Create a Heroku account</li>
+                <li>Create a Heroku app</li>
+                <li>Download Heroku CLI</li>
+                <li>
+                    Create a docker container using the Docker file provided in the
+                    solution
+                </li>
+                <li>
+                    Make sure to name the container exactly the same as the Heroku app
+                    created above
+                </li>
+                <ul>
+                    <li>
+                        e.g. docker build -t knockoutdemo . (where knockoutdemo
+                        is the app name created in Heroku)
+                    </li>
+                </ul>
+                <li>Open a command shell and execute the following:</li>
+                <ul>
+                    <li>
+                        heroku login (this will open the browser and you can login to
+                        Heroku)
+                    </li>
+                    <li>heroku container:login</li>
+                    <li>heroku container:push -a &lt;your-container-name&gt; web</li>
+                    <li>heroku container:release -a &lt;your-container-name&gt;</li>
+                </ul>
+                <li>Done</li>
+            </ul>
+            <br />
+            <p>
+                [NOTE*: Your database server will have to be reacheable in the
+                Internet. For this demo the database was hosted at SmarterASP using a
+                free-tier account.]
+            </p>
+            <p>
+                [NOTE**: The docker script provided is intended for Heroku. If you
+                need your container to run locally you will need to change EXPOSE
+                ${PORT} to EXPOSE 80 (or any local port available)]
+            </p>
+        </div>
+    </ul>
+    <br />
+</div>
